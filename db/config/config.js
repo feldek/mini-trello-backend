@@ -1,13 +1,10 @@
-const username = process.env.DB_CONFIG_USERNAME;
-const password = process.env.DB_CONFIG_PASSWORD;
-const database = process.env.DB_CONFIG_DATABASE;
-const host = process.env.DB_CONFIG_HOST;
+require('dotenv').config();
 
 const development = production = {
-  username,
-  password,
-  database,
-  host,
+  username: process.env.DB_CONFIG_USERNAME,
+  password: process.env.DB_CONFIG_PASSWORD,
+  database: process.env.DB_CONFIG_DATABASE,
+  host: process.env.DB_CONFIG_HOST,
   dialect: "postgres",
   port: "5432",
   dialectOptions: {

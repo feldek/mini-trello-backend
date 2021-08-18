@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "db:create": "cd db && npx sequelize-cli db:create",
+    "db:migrate": "cd db && npx sequelize-cli db:migrate",
+    "db:seed": "cd db && npx sequelize-cli db:seed:all"
   },
   "author": "",
   "license": "ISC",
