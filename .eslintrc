@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    // TODO: remove this rule when there will be no more any
+    "@typescript-eslint/no-explicit-any": "off",
+    // curly: ["error", "all"],
+    "no-param-reassign": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Object": false,
+          "object": false
+        }
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": true,
+        "memberSyntaxSortOrder": ["all", "multiple", "single", "none"]
+      }
+    ],
+    "quotes": ["error", "double"],
+    "operator-linebreak": "off",
+    "no-debugger": "warn"
+  },
+  "no-undef": "off"
+}
