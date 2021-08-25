@@ -1,17 +1,26 @@
-module.exports.notification = async (
-  res,
-  { status = false, message = "", description = "" }
-) => {
+import { Response } from "express";
+
+export const notification = async (
+  res: Response,
+  {
+    status = false,
+    message = "",
+    description = "",
+  }: { status: boolean; message: string; description?: string },
+): Promise<void> => {
   try {
+    let header: string;
+    let colorHeader: string;
+
     if (status) {
-      var header = "The operation was successful";
-      var colorHeader = "#690";
+      header = "The operation was successful";
+      colorHeader = "#690";
     } else {
-      var header = "ERROR";
-      var colorHeader = "#fb3e44";
+      header = "ERROR";
+      colorHeader = "#fb3e44";
     }
 
-    let backgroundStyle = ` 
+    const backgroundStyle = ` 
       width: 100%;
       height: 100%;
       display: flex;
@@ -22,7 +31,7 @@ module.exports.notification = async (
       "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     `;
 
-    let backgrounNotificationStyle = `
+    const backgrounNotificationStyle = `
       min-width: 300px;
       max-width: 600px;
       padding: 20px;      
@@ -38,24 +47,24 @@ module.exports.notification = async (
       box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
       border-radius: 2px;
     `;
-    let headerStyle = `
+    const headerStyle = `
       color: ${colorHeader};
       font-size: 22px;
       padding: 10px;
     `;
 
-    let messageStyle = `
+    const messageStyle = `
       padding-left: 10px;
       padding-right: 10px;
       padding-bottom: 10px;`;
-    let descriptionStyle = `
+    const descriptionStyle = `
       font-size: 14px;
       padding-left: 10px;
       padding-right: 10px;
       padding-bottom: 10px;`;
-    let html = `
+    const html = `
     <div style = '${backgroundStyle}'>
-      <div style = '${backgrounNotificationStyle}'>
+      <dvs style = '${backgrounNotificationStyle}'>
         <div style = '${headerStyle}'>
           ${header}
           </div>
@@ -65,7 +74,7 @@ module.exports.notification = async (
         <div style = '${descriptionStyle}'>
           ${description}
         </div>
-      </div>
+      </dvs>
     </div>
     `;
     res.send(html);

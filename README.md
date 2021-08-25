@@ -1,28 +1,28 @@
 
 1) npm install
 
-2) create .env file at the folder "db"(root/db) and add config database value:
+2) create .env file at root and add config database value:
 
   DB_CONFIG_USERNAME = postgres
   DB_CONFIG_PASSWORD = myPassword
   DB_CONFIG_DATABASE = mini_trello
   DB_CONFIG_HOST = 127.0.0.1
 
-3) npm db:create
+3) npm run db:create
 
 4) install EXTENSION "uuid-ossp" for local database:
-  4.1 psql -U someuser -h 127.0.0.1 database
-  4.2 CREATE EXTENSION "uuid-ossp";
+  4.1) psql -U postgres -h 127.0.0.1 mini_trello       
+  4.2) CREATE EXTENSION "uuid-ossp";
     (4.3 - optional) - check install extension
-  4.3 select * from pg_extension;
+  4.3) select * from pg_extension;
 
-5) npm db:migrate
+5) npm run db:migrate
 
-6) npm db:seed
+6) npm run db:seed
 
-7) create .env file at the root and add next env value:
+7) insert to .env file next value:
 
-  EMAIL = felldektest@yandex.by                        
+  EMAIL = felldektest@yandex.by
   EMAIL_PASSWORD = superSecretPassword#
   OPEN_WEATHER_MAP_KEY = 09c9100efc9d8293dc475e96d7fbeed7
   RECOVERY_PASSWORD_TOKEN_LIFE = 1800s

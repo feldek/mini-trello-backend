@@ -1,8 +1,6 @@
-"use strict";
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tasks", {
+    return queryInterface.createTable("boards", {
       id: {
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
@@ -10,21 +8,13 @@ module.exports = {
         allowNull: false,
       },
       name: { type: Sequelize.DataTypes.STRING, allowNull: false },
-      order: {
-        type: Sequelize.DataTypes.DOUBLE,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.DataTypes.STRING,
-        defaultValue: "",
-      },
-      listId: {
+      userId: {
         type: Sequelize.DataTypes.UUID,
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         allowNull: false,
         references: {
-          model: "lists",
+          model: "users",
           key: "id",
         },
       },
@@ -34,6 +24,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tasks");
+    return queryInterface.dropTable("boards");
   },
 };

@@ -1,27 +1,22 @@
-"use strict";
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("users", {
+    return queryInterface.createTable("lists", {
       id: {
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
         allowNull: false,
       },
-      email: {
-        type: Sequelize.DataTypes.STRING,
+      name: { type: Sequelize.DataTypes.STRING, allowNull: false },
+      boardId: {
+        type: Sequelize.DataTypes.UUID,
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-      },
-      confirm: {
-        type: Sequelize.DataTypes.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
+        references: {
+          model: "boards",
+          key: "id",
+        },
       },
       updatedAt: Sequelize.DataTypes.DATE,
       createdAt: Sequelize.DataTypes.DATE,
@@ -29,6 +24,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("users");
+    return queryInterface.dropTable("lists");
   },
 };
