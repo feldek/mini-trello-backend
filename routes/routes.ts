@@ -36,4 +36,8 @@ router.delete("/task", [authenticateToken, (req, res) => task.deleteTask(req, re
 router.get("/api/geoplugin", [authenticateToken, geoPlugin]);
 router.get("/api/weatherplugin", [authenticateToken, weatherPlugin]);
 
+router.get("/test", (req, res) => {
+  res.status(200).json({ test: "json" });
+});
+
 export default router;

@@ -1,7 +1,5 @@
 import { connectDB } from "./db/models/associate/initDB";
 import express from "express";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// require("dotenv").config();
 import "dotenv/config.js";
 import cors from "cors";
 import routes from "./routes/routes";
