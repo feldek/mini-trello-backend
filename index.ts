@@ -2,7 +2,7 @@ import { connectDB } from "./db/models/associate/initDB";
 import express from "express";
 import "dotenv/config.js";
 import cors from "cors";
-import routes from "./routes/routes";
+import routes from "./src/routes/routes";
 const PORT = process.env.PORT || 3004;
 const app = express();
 

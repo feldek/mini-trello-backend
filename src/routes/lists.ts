@@ -1,6 +1,6 @@
 import { AuthReq } from "./auth";
-import { Board } from "../db/models/boards";
-import { List } from "../db/models/lists";
+import { Board } from "../../db/models/boards";
+import { List } from "../../db/models/lists";
 import { Response } from "express";
 
 interface IGetList extends AuthReq {

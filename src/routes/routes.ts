@@ -6,6 +6,7 @@ import { geoPlugin, weatherPlugin } from "./api/weatherplugin";
 import { Router } from "express";
 import { authenticateToken } from "./auth/authMiddleware";
 import { refreshTokensAuth } from "./auth/token";
+import { filesRepository as files } from "./files";
 
 const router = Router();
 
@@ -36,8 +37,11 @@ router.delete("/task", [authenticateToken, (req, res) => task.deleteTask(req, re
 router.get("/api/geoplugin", [authenticateToken, geoPlugin]);
 router.get("/api/weatherplugin", [authenticateToken, weatherPlugin]);
 
+router.get("/files/:folder/:fileName", [(req, res) => files.getFile(req, res)]);
+
 router.get("/test", (req, res) => {
   res.status(200).json({ test: "json" });
 });
+
 
 export default router;
