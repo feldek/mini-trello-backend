@@ -1,9 +1,14 @@
 import { Response, Request } from "express";
 import fs from "fs";
 import path, { dirname } from "path";
+import { ENVconfig } from "../ENVconfig";
+const sharp = require("sharp");
 
 interface IGetAvatar extends Request {
   params: { folder: string; fileName: string };
+}
+interface IUploadFile extends Request {
+  file: any;
 }
 
 export const filesRepository = {
@@ -21,5 +26,28 @@ export const filesRepository = {
         }
       });
     } catch (err) {}
+  },
+
+  async uploadFile(req: IUploadFile, res: Response) {
+    const { folder } = req.params;
+    const pathToFile = `./src/files/${folder}`;
+
+    fs.access(pathToFile, (error) => {
+      if (error) {
+        fs.mkdirSync(pathToFile);
+      }
+    });
+
+    if (!req.file) {
+      res.send("Ошибка при загрузке файла");
+    }
+    console.log(req.file);
+    const { buffer, originalname } = req.file;
+    await sharp(buffer)
+      .resize(200, 200)
+      .toFile(pathToFile + "/" + originalname);
+
+    const link = `${ENVconfig.apiUrl}files/${folder}/${originalname}`;
+    return res.json({ link });
   },
 };

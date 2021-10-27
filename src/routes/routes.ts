@@ -3,10 +3,11 @@ import { boardRepository as board } from "./boards";
 import { listRepository as list } from "./lists";
 import { taskRepository as task } from "./tasks";
 import { geoPlugin, weatherPlugin } from "./api/weatherplugin";
-import { Router } from "express";
-import { authenticateToken } from "./auth/authMiddleware";
-import { refreshTokensAuth } from "./auth/token";
+import { Request, Router } from "express";
+import { authenticateToken } from "../middewares/authMiddleware/authMiddleware";
+import { refreshTokensAuth } from "../middewares/authMiddleware/token";
 import { filesRepository as files } from "./files";
+import { multerMiddleware } from "../middewares/multerMiddleware/multerMiddleware";
 
 const router = Router();
 
@@ -38,6 +39,11 @@ router.get("/api/geoplugin", [authenticateToken, geoPlugin]);
 router.get("/api/weatherplugin", [authenticateToken, weatherPlugin]);
 
 router.get("/files/:folder/:fileName", [(req, res) => files.getFile(req, res)]);
+router.post("/files/:folder", [
+  authenticateToken,
+  multerMiddleware,
+  (req, res) => files.uploadFile(req, res),
+]);
 
 router.get("/test", (req, res) => {
   res.status(200).json({ test: "json" });

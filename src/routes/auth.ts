@@ -9,7 +9,7 @@ import {
   generateToken,
   tokenSecretAuth,
   jwtVerify,
-} from "./auth/token";
+} from "../middewares/authMiddleware/token";
 import { notification } from "../report/notification";
 
 const bcryptVerify = (target: string): Promise<string> => {
