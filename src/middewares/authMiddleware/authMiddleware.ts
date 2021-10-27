@@ -1,4 +1,4 @@
-import { AuthReq } from "./../auth";
+import { AuthReq } from "../../routes/auth";
 import { Response, NextFunction, Request } from "express";
 import { jwtVerify } from "./token";
 const tokenSecret = process.env.TOKEN_SECRET;

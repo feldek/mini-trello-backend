@@ -1,5 +1,5 @@
 import { AuthReq } from "./auth";
-import { Board } from "../db/models/boards";
+import { Board } from "../../db/models/boards";
 import { Response } from "express";
 
 interface ICreateBoard extends AuthReq {

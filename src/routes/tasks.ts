@@ -1,7 +1,7 @@
 import { AuthReq } from "./auth";
-import { Task } from "../db/models/tasks";
-import { List } from "../db/models/lists";
-import { Board } from "../db/models/boards";
+import { Task } from "../../db/models/tasks";
+import { List } from "../../db/models/lists";
+import { Board } from "../../db/models/boards";
 import { Response } from "express";
 
 interface IGetTasks extends AuthReq {

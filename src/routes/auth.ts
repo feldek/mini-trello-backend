@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../db/models/users";
+import { User } from "../../db/models/users";
 import { mail } from "../report/mail";
 import bcrypt from "bcryptjs";
 import {
@@ -9,7 +9,7 @@ import {
   generateToken,
   tokenSecretAuth,
   jwtVerify,
-} from "./auth/token";
+} from "../middewares/authMiddleware/token";
 import { notification } from "../report/notification";
 
 const bcryptVerify = (target: string): Promise<string> => {
