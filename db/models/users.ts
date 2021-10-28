@@ -7,6 +7,7 @@ export interface IUser extends Model {
   password: string;
   confirm: boolean;
   id: string;
+  avatar: string
 
   createdAt: Date;
   updatedAt: Date;
@@ -32,6 +33,9 @@ export const User = <IModelStatic<IUser>>sequelize.define("users", {
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     primaryKey: true,
+  },
+  avatar: {
+    type: DataTypes.STRING,
   },
 });
 

@@ -16,8 +16,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
     (req as AuthReq).user = user;
     return next();
   } catch (err) {
-    console.log(err);
-    if (err.name === "TokenExpiredError") {
+    if ((err as { name: string }).name === "TokenExpiredError") {
       res.status(403).json({});
     } else {
       res.status(401).json({});
