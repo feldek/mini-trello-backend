@@ -1,17 +1,17 @@
-import { userRepository as user } from "./auth";
+import { AuthReq, userRepository as user } from "./auth";
 import { boardRepository as board } from "./boards";
 import { listRepository as list } from "./lists";
 import { taskRepository as task } from "./tasks";
 import { geoPlugin, weatherPlugin } from "./api/weatherplugin";
-import { Request, Router } from "express";
+import { Request, Response, Router } from "express";
 import { authenticateToken } from "../middewares/authMiddleware/authMiddleware";
 import { refreshTokensAuth } from "../middewares/authMiddleware/token";
-import { filesRepository as files } from "./files";
-import { multerMiddleware } from "../middewares/multerMiddleware/multerMiddleware";
+import { fileRoutes } from "./fileRoute";
 
 const router = Router();
 
 router.post("/auth/signUp", [(req, res) => user.signUp(req, res)]);
+router.get("/auth/fetchUser", [authenticateToken, (req, res) => user.fetchUser(req, res)]);
 router.post("/auth/signIn", [(req, res) => user.signIn(req, res)]);
 router.post("/auth/recoveryPassword", [(req, res) => user.generateRecoveryLink(req, res)]);
 router.get("/auth/recoveryPassword/link/:token", [(req, res) => user.recoveryPassword(req, res)]);
@@ -38,16 +38,6 @@ router.delete("/task", [authenticateToken, (req, res) => task.deleteTask(req, re
 router.get("/api/geoplugin", [authenticateToken, geoPlugin]);
 router.get("/api/weatherplugin", [authenticateToken, weatherPlugin]);
 
-router.get("/files/:folder/:fileName", [(req, res) => files.getFile(req, res)]);
-router.post("/files/:folder", [
-  authenticateToken,
-  multerMiddleware,
-  (req, res) => files.uploadFile(req, res),
-]);
-
-router.get("/test", (req, res) => {
-  res.status(200).json({ test: "json" });
-});
-
+router.use("/files", fileRoutes);
 
 export default router;

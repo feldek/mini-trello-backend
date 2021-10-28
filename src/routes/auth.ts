@@ -58,6 +58,22 @@ export const userRepository = {
     }
   },
 
+  async fetchUser(req: AuthReq, res: Response) {
+    try {
+      const userId = req.user.id;
+      console.log(userId);
+      const user = await User.findOne({
+        where: { id: userId },
+        attributes: ["avatar"],
+      });
+      console.log(user?.avatar);
+
+      res.status(200).json({ avatar_url: user?.avatar });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
   async confirmEmail(req: IConfirmEmail, res: Response) {
     try {
       const user = (await jwtVerify(req.params.confirmToken, tokenSecretAuth)) as unknown as {
