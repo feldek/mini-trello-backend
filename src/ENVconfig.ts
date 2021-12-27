@@ -9,7 +9,7 @@ export const ENVconfig = process.env.NODE_ENV === "development" ? development : 
 
 export const PATH_TO_SRC = __dirname;
 
-
+export const  test = 56
 
 
 // test precommit124567890
