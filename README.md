@@ -4,9 +4,9 @@
 2) create .env file at root and add config database value:
 
   DB_CONFIG_USERNAME = postgres
-  DB_CONFIG_PASSWORD = myPassword
+  DB_CONFIG_PASSWORD = postgres
   DB_CONFIG_DATABASE = mini_trello
-  DB_CONFIG_HOST = 127.0.0.1
+  DB_CONFIG_HOST = localhost
 
 3) npm run db:create
 

@@ -6,11 +6,11 @@ module.exports = {
     database: process.env.DB_CONFIG_DATABASE,
     host: process.env.DB_CONFIG_HOST,
     dialect: "postgres",
-    port: "5432",
+    port: "5431",
     dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
       define: {
         freezeTableName: true,
       },
