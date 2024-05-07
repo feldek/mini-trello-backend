@@ -2,6 +2,6 @@
 
 npm run db:create
 
-CREATE EXTENSION "uuid-ossp";
+npm run db:migrate
 
-select * from pg_extension;
+npm run db:seed

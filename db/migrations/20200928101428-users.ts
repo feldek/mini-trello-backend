@@ -1,5 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.query("CREATE EXTENSION \"uuid-ossp\";")
+
     return queryInterface.createTable("users", {
       id: {
         primaryKey: true,

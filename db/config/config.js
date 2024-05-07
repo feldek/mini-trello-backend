@@ -6,7 +6,7 @@ module.exports = {
     database: process.env.DB_CONFIG_DATABASE,
     host: process.env.DB_CONFIG_HOST,
     dialect: "postgres",
-    port: "5431",
+    port: "5433",
     dialectOptions: {
       // ssl: {
       //   rejectUnauthorized: false,
@@ -22,7 +22,7 @@ module.exports = {
     database: process.env.DB_CONFIG_DATABASE,
     host: process.env.DB_CONFIG_HOST,
     dialect: "postgres",
-    port: "5432",
+    port: "5433",
     dialectOptions: {
       ssl: {
         rejectUnauthorized: false,
