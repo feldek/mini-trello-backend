@@ -1,4 +1,15 @@
-/node_modules
-/src/files
+backend/node_modules/
+backend/src/files/
+backend/data/
+frontend/node_modules/
 *.env
-/.idea/*
+
+# IDE #
+######################
+.vscode/
+.fleet/
+.idea/
+*.iml
+
+data/
+letsencrypt/
