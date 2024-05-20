@@ -1,0 +1,25 @@
+# Complete Nginx Docker reverse proxy config file
+server {
+  listen 80;
+  listen [::]:80;
+  server_name localhost;
+
+  location /app {
+    proxy_pass http://192.168.100.33:3000/;
+  }
+
+  location /backend/ {
+    proxy_pass http://192.168.100.33:3004/;
+  }
+
+  location / {
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+  }
+
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/html;
+  }
+}

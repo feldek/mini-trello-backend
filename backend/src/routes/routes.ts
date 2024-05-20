@@ -1,15 +1,16 @@
-import { AuthReq, userRepository as user } from "./auth";
-import { boardRepository as board } from "./boards";
-import { listRepository as list } from "./lists";
-import { taskRepository as task } from "./tasks";
-import { geoPlugin, weatherPlugin } from "./api/weatherplugin";
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import { authenticateToken } from "../middewares/authMiddleware/authMiddleware";
 import { refreshTokensAuth } from "../middewares/authMiddleware/token";
+import { geoPlugin, weatherPlugin } from "./api/weatherplugin";
+import { userRepository as user } from "./auth";
+import { boardRepository as board } from "./boards";
 import { fileRoutes } from "./fileRoute";
+import { listRepository as list } from "./lists";
+import { taskRepository as task } from "./tasks";
 
 const router = Router();
-
+ 
+router.get("/health-check", [(req, res) => res.status(200).json({ result: "true" })]);
 router.post("/auth/signUp", [(req, res) => user.signUp(req, res)]);
 router.get("/auth/fetchUser", [authenticateToken, (req, res) => user.fetchUser(req, res)]);
 router.post("/auth/signIn", [(req, res) => user.signIn(req, res)]);
