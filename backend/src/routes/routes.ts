@@ -9,7 +9,8 @@ import { listRepository as list } from "./lists";
 import { taskRepository as task } from "./tasks";
 
 const router = Router();
- 
+
+router.get("/", [(req, res) => res.status(200).json({ result: "true", root: "asd" })]);
 router.get("/health-check", [(req, res) => res.status(200).json({ result: "true" })]);
 router.post("/auth/signUp", [(req, res) => user.signUp(req, res)]);
 router.get("/auth/fetchUser", [authenticateToken, (req, res) => user.fetchUser(req, res)]);

@@ -1,6 +1,6 @@
 FROM node:20.10.0-bullseye-slim
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 

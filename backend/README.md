@@ -37,3 +37,8 @@ TOKEN_SECRET =
 
 docker build --tag 'mini_trelo_backend' .
 docker run --network host mini_trelo_backend
+
+cd etc/nginx/conf.d/default.conf
+
+nginx -s reload
+
