@@ -22,6 +22,8 @@ services:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   frontend:
     container_name: frontend
@@ -57,3 +59,6 @@ services:
       TOKEN_SECRET: "601af7d42208e2626fad09c3cc72cd07ed9faf7947491e5378fc22b747aea1c1b63b50f6678c2f3d3c36e454aa2940e110213de32e33c53a7563b09a7ddf1de2"
     ports:
       - '3004:3004'
+
+volumes:
+  pgdata:
