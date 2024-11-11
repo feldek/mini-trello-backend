@@ -1,9 +1,8 @@
 import axios from "axios";
-import React from "react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import config from "../../../../Constants";
+import { config } from "../../../../Constants";
 import { useTypeSelector } from "../../../../Redux/TypeHook";
 import { notificationAntd, onSetUserAvatar } from "../../../../Redux/User/UserSlice";
 import s from "./UserAvatar.module.css";
@@ -15,7 +14,7 @@ export const UserAvatar = (): JSX.Element => {
   const userId = useTypeSelector((s) => s.user.id);
   const apiUrl = config.apiUrl;
   const fileInput = useRef<HTMLInputElement>(null);
-  
+
 
   const onSubmit = async () => {
     if (fileInput.current?.files) {
@@ -43,8 +42,8 @@ export const UserAvatar = (): JSX.Element => {
             onUploadProgress: (ProgressEvent: any) => {
               console.log(
                 "Upload Progress: " +
-                  Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                  "%",
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+                "%",
               );
             },
           },

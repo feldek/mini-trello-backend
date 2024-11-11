@@ -2,17 +2,15 @@
 version: '3.7'
 
 services:
-  nginx-proxy:
-    image: 'nginx:latest'
-    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    image: "frontend:1.0.1"
+
+  proxy:
+    build: ./nginx-proxy
+    image: "proxy:1.0.0"
     ports:
-      - '80:80'
-      #      - '81:81'
-      - '443:443'
-    volumes:
-      - ./nginx/config:/etc/nginx/conf.d
-  #      - ./data:/data
-  #      - ./letsencrypt:/etc/letsencrypt
+      - "80:80"
 
   postgres_db:
     image: postgres:12
@@ -25,29 +23,16 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    volumes:
-      - './:/app'
-      - '/app/node_modules'
-    ports:
-      - 3000:3000
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm start
-
   backend:
     build: ./backend/
-    network_mode: "host"
+    image: "backend:1.0.0"
     environment:
       NODE_ENV: "development"
-      DB_CONFIG_HOST: "localhost"
+      DB_CONFIG_HOST: "postgres_db"
       DB_CONFIG_USERNAME: "postgres"
       DB_CONFIG_PASSWORD: "postgres"
       DB_CONFIG_DATABASE: "postgres"
-      DB_CONFIG_PORT: "5433"
+      DB_CONFIG_PORT: "5432"
       EMAIL: "felldektest@yandex.by"
       EMAIL_PASSWORD: "superSecretPassword#"
       OPEN_WEATHER_MAP_KEY: "09c9100efc9d8293dc475e96d7fbeed7"

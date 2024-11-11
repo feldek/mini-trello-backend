@@ -1,38 +1,38 @@
-import config, { forcedLogOut } from "../Constants";
 import axios from "axios";
+import { config, forcedLogOut } from "../Constants";
 
 const apiUrl = config.apiUrl;
 
 const instance = axios.create({ baseURL: apiUrl });
 instance.interceptors.response.use(
-  function (response) {
+  function(response) {
     return new Promise<any>((resolve) => {
       resolve({ payload: response.data, status: true });
     });
   },
-  function (error) {
+  function(error) {
     if (error.message === "Network Error") {
       return Promise.resolve({ payload: error, status: false });
     }
     return { payload: error.response.data, status: false };
-  }
+  },
 );
 
 const instanceAuth = axios.create({ baseURL: apiUrl });
-instanceAuth.interceptors.request.use(function (config) {
+instanceAuth.interceptors.request.use(function(config) {
   const token = localStorage.getItem("token") || undefined;
 
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 instanceAuth.interceptors.response.use(
-  function (response) {
+  function(response) {
     console.log(response.data);
     return new Promise<any>((resolve) => {
       resolve({ payload: response.data, status: true });
     });
   },
-  function (error) {
+  function(error) {
     const originalRequest = error.config;
     if (error.message === "Network Error") {
       return Promise.resolve({ payload: error, status: false });
@@ -44,7 +44,7 @@ instanceAuth.interceptors.response.use(
       return window.location.replace(forcedLogOut);
     }
     return { payload: error.response.data, status: false };
-  }
+  },
 );
 
 const api = {
@@ -70,7 +70,7 @@ const refreshTokensAxios = async (config: any) => {
   const tokens = await axios.post(
     apiUrl + "auth/refreshTokensAuth",
     {},
-    { headers: { Authorization: `Bearer ${refreshToken}` } }
+    { headers: { Authorization: `Bearer ${refreshToken}` } },
   );
   if (tokens.status === 401) {
     return window.location.replace(forcedLogOut);

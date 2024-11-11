@@ -1,13 +1,26 @@
-FROM node:20.10.0-bullseye-slim
+FROM node:20.18.0-alpine3.19 as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-RUN npm install --force
+# Install dependencies
+RUN npm install
 
+# Copy the current directory contents to the container at /app
 COPY . .
 
-EXPOSE 3000
+ENV PATH /app/node_modules/.bin:$PATH
 
-CMD [ "npm", "start" ]
+COPY . /app
+
+RUN npm run build
+
+FROM nginx:1.21.0-alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+s
+CMD ["nginx", "-g", "daemon off;"]

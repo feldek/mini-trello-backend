@@ -1,7 +1,8 @@
 import path from "path";
 
 const prodaction = {
-  apiUrl: "https://server-to-do-list.herokuapp.com/",
+  // apiUrl: "https://server-to-do-list.herokuapp.com/",
+  apiUrl: "http://localhost",
 };
 
 const development = {
