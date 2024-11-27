@@ -1,2 +1,15 @@
-node_modules
-.env
+backend/node_modules/
+backend/src/files/
+backend/data/
+frontend/node_modules/
+*.env
+
+# IDE #
+######################
+.vscode/
+.fleet/
+.idea/
+*.iml
+
+data/
+letsencrypt/
