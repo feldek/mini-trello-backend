@@ -14,9 +14,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: go to backend
-        run: cd ./backend
-      - name: install modules
+      - name: cd ./backend install modules
         run: npm install
       - name: echo successful
         run: echo successful
