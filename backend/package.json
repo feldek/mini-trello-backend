@@ -41,7 +41,7 @@
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "nodemon": "^2.0.12",
-    "sequelize-cli": "^6.2.0",
+    "sequelize-cli": "^6.6.2",
     "ts-node-dev": "^1.1.8"
   }
 }

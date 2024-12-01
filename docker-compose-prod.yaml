@@ -3,12 +3,12 @@ version: '3.7'
 
 services:
   frontend:
-    build: ./frontend
-    image: "mini_trello_frontend:v1.0.0"
+    image: docker.io/felldek/mini-trello-frontend:latest
+    pull_policy: always
 
   proxy:
-    build: ./nginx-proxy
-    image: "mini_trello_proxy:v1.0.0"
+    image: docker.io/felldek/mini-trello-proxy:latest
+    pull_policy: always
     ports:
       - "80:80"
 
@@ -24,8 +24,8 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build: ./backend/
-    image: "mini_trello_backend:v1.0.0"
+    image: docker.io/felldek/mini-trello-backend:latest
+    pull_policy: always
     environment:
       NODE_ENV: "development"
       DB_CONFIG_HOST: "postgres_db"
