@@ -4,11 +4,11 @@ version: '3.7'
 services:
   frontend:
     build: ./frontend
-    image: "mini_trello_frontend:v1.0.0"
+    image: "mini_trello_frontend:latest"
 
   proxy:
     build: ./nginx-proxy
-    image: "mini_trello_proxy:v1.0.0"
+    image: "mini_trello_proxy:latest"
     ports:
       - "80:80"
 
@@ -25,7 +25,7 @@ services:
 
   backend:
     build: ./backend/
-    image: "mini_trello_backend:v1.0.0"
+    image: "mini_trello_backend:latest"
     environment:
       NODE_ENV: "development"
       DB_CONFIG_HOST: "postgres_db"

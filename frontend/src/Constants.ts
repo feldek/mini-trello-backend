@@ -1,16 +1,12 @@
+import {getOrThrow} from "./Utils/GetOrThrow";
+
 type TConfig = {
   apiUrl: string
 }
 
-const prod: TConfig = {
-  apiUrl: "http://localhost/api/",
+const config: TConfig = {
+  apiUrl: getOrThrow(process.env.REACT_APP_API)
 };
-
-const dev: TConfig = {
-  apiUrl: "http://localhost:3004/",
-};
-
-const config: TConfig = process.env.NODE_ENV === "development" ? dev : prod;
 
 const forcedLogOut = "authorization/forcedLogOut";
 
