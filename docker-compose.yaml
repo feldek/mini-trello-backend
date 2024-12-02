@@ -34,7 +34,7 @@ services:
       DB_CONFIG_DATABASE: "postgres"
       DB_CONFIG_PORT: "5432"
       EMAIL: "felldektest@yandex.by"
-      EMAIL_PASSWORD: "superSecretPassword#"
+      EMAIL_PASSWORD: "zofosgmaubumnxhc"
       OPEN_WEATHER_MAP_KEY: "09c9100efc9d8293dc475e96d7fbeed7"
       RECOVERY_PASSWORD_TOKEN_LIFE: "1800s"
       RECOVERY_PASSWORD_TOKEN_SECRET: "a23764d8447acfda33c5234f186417acc0591473a7c2a4ed5448b818242ad87622826d91f"

@@ -3,8 +3,15 @@ import express from "express";
 import "dotenv/config.js";
 import { connectDB } from "./db/models/associate/initDB";
 import routes from "./src/routes/routes";
+import { config } from "dotenv";
+import path from "path";
+
+const pathEnv = path.resolve(__dirname, ".env")
+
+config({path: pathEnv});
 
 const PORT = process.env.PORT || 3004;
+
 const app = express();
 
 app.use(express.urlencoded());
@@ -15,7 +22,7 @@ app.use("/", routes);
 
 connectDB()
   .then(async () => {
-    app.listen(PORT, function() {
+    app.listen(PORT, function () {
       console.log(`Server has been started... Port: ${PORT}!`);
     });
   })
