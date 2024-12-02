@@ -15,10 +15,6 @@ interface ISendLinkConfirmEmail {
   email: string;
 }
 
-export default {
-  test: 5,
-};
-
 export const mail = {
   async sendLinkConfirmEmail({ confirmEmailToken, email }: ISendLinkConfirmEmail) {
     try {
