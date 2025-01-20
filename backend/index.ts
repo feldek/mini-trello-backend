@@ -23,7 +23,13 @@ app.use("/", routes);
 connectDB()
   .then(async () => {
     app.listen(PORT, function () {
-      console.log(`Server has been started... Port: ${PORT}!`);
+      console.log("process.env.MINI_TRELLO_HOST", process.env.MINI_TRELLO_HOST)
+      console.log("process.env.HOST", process.env.HOST)
+      console.log("process.env.DB_CONFIG_DATABASE", process.env.DB_CONFIG_DATABASE)
+      console.log("DB_CONFIG_USERNAME",process.env.DB_CONFIG_USERNAME);
+      console.log("DB_CONFIG_PASSWORD",process.env.DB_CONFIG_PASSWORD);
+      console.log("DB_CONFIG_DATABASE",process.env.DB_CONFIG_DATABASE);
+      console.log("DB_CONFIG_HOST",process.env.DB_CONFIG_HOST);
     });
   })
   .catch((err) => {
