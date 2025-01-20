@@ -9,7 +9,10 @@ IMAGE_FRONTEND="felldek/mini-trello-frontend"
 IMAGE_PROXY="felldek/mini-trello-proxy"
 IMAGE_TAG=v1.0.2
 
-docker login -u "${DOCKER_USERNAME}" --password-stdin < ~/passwords/docker-password.txt
+
+#~passwords/docker-password.txt  password like line
+#docker login -u "${DOCKER_USERNAME}" --password-stdin < ~/passwords/docker-password.txt
+docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
 docker build --tag ${IMAGE_BACKEND}:${IMAGE_TAG} --tag ${IMAGE_BACKEND}:latest --file backend/Dockerfile backend
 docker build --tag ${IMAGE_FRONTEND}:${IMAGE_TAG} --tag ${IMAGE_FRONTEND}:latest --file frontend/Dockerfile frontend

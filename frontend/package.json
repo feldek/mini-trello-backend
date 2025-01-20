@@ -43,7 +43,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build3": "react-scripts build",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "REACT_APP_API=http://api-mini-trello.duckdns.org/ react-scripts --openssl-legacy-provider build",
     "build1": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
