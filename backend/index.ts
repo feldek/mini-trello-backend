@@ -30,6 +30,8 @@ connectDB()
       console.log("DB_CONFIG_PASSWORD",process.env.DB_CONFIG_PASSWORD);
       console.log("DB_CONFIG_DATABASE",process.env.DB_CONFIG_DATABASE);
       console.log("DB_CONFIG_HOST",process.env.DB_CONFIG_HOST);
+      console.log("MINI_TRELLO_DB_CONFIG_DATABASE",process.env.MINI_TRELLO_DB_CONFIG_DATABASE);
+      console.log("MINI_TRELLO_DB_CONFIG_DATABASE2",process.env.MINI_TRELLO_DB_CONFIG_DATABASE2);
     });
   })
   .catch((err) => {
