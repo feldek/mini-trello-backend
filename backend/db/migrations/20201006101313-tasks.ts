@@ -1,6 +1,7 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tasks", {
+  up: async (queryInterface, Sequelize) => queryInterface.createTable(
+    "tasks",
+    {
       id: {
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
@@ -28,10 +29,8 @@ module.exports = {
       },
       updatedAt: Sequelize.DataTypes.DATE,
       createdAt: Sequelize.DataTypes.DATE,
-    });
-  },
+    },
+  ),
 
-  down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tasks");
-  },
+  down: async (queryInterface, Sequelize) => queryInterface.dropTable("tasks"),
 };

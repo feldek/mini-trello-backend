@@ -17,10 +17,13 @@ router.get("/auth/fetchUser", [authenticateToken, (req, res) => user.fetchUser(r
 router.post("/auth/signIn", [(req, res) => user.signIn(req, res)]);
 router.post("/auth/recoveryPassword", [(req, res) => user.generateRecoveryLink(req, res)]);
 router.get("/auth/recoveryPassword/link/:token", [(req, res) => user.recoveryPassword(req, res)]);
-router.post("/auth/changePassword", [
-  authenticateToken,
-  (req, res) => user.changePassword(req, res),
-]);
+router.post(
+  "/auth/changePassword",
+  [
+    authenticateToken,
+    (req, res) => user.changePassword(req, res),
+  ],
+);
 router.post("/auth/refreshTokensAuth", [(req, res) => refreshTokensAuth(req, res)]);
 router.get("/auth/confirmEmail/:confirmToken", [(req, res) => user.confirmEmail(req, res)]);
 

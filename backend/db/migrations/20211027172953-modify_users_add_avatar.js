@@ -1,15 +1,15 @@
 "use strict";
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return Promise.all([
-      queryInterface.addColumn("users", "avatar", {
+  up: async (queryInterface, Sequelize) => Promise.all([
+    queryInterface.addColumn(
+      "users",
+      "avatar",
+      {
         type: Sequelize.STRING,
-      }),
-    ]);
-  },
+      },
+    ),
+  ]),
 
-  down: async (queryInterface, Sequelize) => {
-    return Promise.all([queryInterface.removeColumn("users", "avatar")]);
-  },
+  down: async (queryInterface, Sequelize) => Promise.all([queryInterface.removeColumn("users", "avatar")]),
 };
