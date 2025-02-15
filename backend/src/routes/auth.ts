@@ -1,73 +1,81 @@
 import bcrypt from "bcryptjs";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
+import { Error } from "sequelize";
 import { User } from "../../db/models/users";
-import {
-  getTokensAuth,
-  getTokenRecoveryPassword,
-  recoveryPasswordTokenSecret,
-  generateToken,
-  tokenSecretAuth,
-  jwtVerify,
-} from "../middewares/authMiddleware/token";
+import { jwtToken, jwtVerify } from "../middewares/authMiddleware/token";
 import { mail } from "../report/mail";
 import { notification } from "../report/notification";
+import { getOrThrow } from "../utils/GetOrThrow";
+import { ENV } from "../constants/Envs";
 
-const bcryptVerify = (target: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(target, 8, (err, hash: string) => {
-      if (err) return reject(err);
-      return resolve(hash);
-    });
-  });
-};
+const bcryptVerify = (target: string): Promise<string> => new Promise((resolve, reject) => {
+  bcrypt.hash(
+    target,
+    8,
+    (err, hash) => {
+      if (err) {
+        reject(err);
+
+        return;
+      }
+
+      resolve(getOrThrow(hash));
+    },
+  );
+});
 
 interface ISign extends Request {
-  body: { password: string; email: string };
+  body: { password: string; email: string; };
 }
 
-export interface AuthReq extends Request {
-  user: { id: string };
+interface IAuthReq extends Request {
+  user: { id: string; };
 }
 
-interface IChangePassword extends AuthReq {
-  body: { oldPassword: string; newPassword: string };
+interface IChangePassword extends IAuthReq {
+  body: { oldPassword: string; newPassword: string; };
 }
 
-type IConfirmEmail = Request & { params: { confirmToken: string } };
+type TConfirmEmail = Request & { params: { confirmToken: string; }; };
 
-type IRecoveryPassword = Request & { params: { token: string } };
-export const userRepository = {
+type TRecoveryPassword = Request & { params: { token: string; }; };
+
+const userRepository = {
   async signUp(req: ISign, res: Response) {
     try {
       const { password, email } = req.body;
+
       const encryptedPassword = await bcryptVerify(password);
+
       const user = await User.create({ email, password: encryptedPassword });
-      console.log("user:", user);
+
       await this.signIn(req, res);
-      const confirmEmailToken = generateToken({ id: user.id }, tokenSecretAuth);
+
+      const confirmEmailToken = jwtToken.generateCommonToken({ id: user.id });
+
       await mail.sendLinkConfirmEmail({ confirmEmailToken, email: user.email });
-    } catch (e) {
-      console.log("func signUp", e);
-      if (e.original.code === "23505") {
-        res.status(400).json({
-          message: "This E-mail already registered",
-        });
-        console.log("This E-mail already registered");
-      } else {
+    } catch (err) {
+      //@ts-ignore
+      if (err.original.code !== "23505") {
         res.status(500).json({});
+
+        return;
       }
+
+      res.status(400).json({
+        message: "This E-mail already registered",
+      });
     }
   },
 
-  async fetchUser(req: AuthReq, res: Response) {
+  async fetchUser(req: IAuthReq, res: Response) {
     try {
       const userId = req.user.id;
-      console.log(userId);
+
       const user = await User.findOne({
         where: { id: userId },
         attributes: ["avatar"],
       });
-      console.log(user?.avatar);
 
       res.status(200).json({ avatar_url: user?.avatar });
     } catch (err) {
@@ -75,41 +83,45 @@ export const userRepository = {
     }
   },
 
-  async confirmEmail(req: IConfirmEmail, res: Response) {
+  async confirmEmail(req: TConfirmEmail, res: Response) {
     try {
-      const user = (await jwtVerify(req.params.confirmToken, tokenSecretAuth)) as unknown as {
-        id: string;
-      };
-      console.log(__filename, "user:", user);
+      const user = await jwtVerify(req.params.confirmToken, ENV.TOKEN_SECRET);
+
       const result = await User.update({ confirm: true }, { where: { id: user.id } });
-      let status, message;
+
+      let status = true;
+      let message = "The operation was successful, your mail has been confirmed.";
+
       if (!result[0]) {
         status = false;
         message = "Something went wrong";
-      } else {
-        status = true;
-        message = "The operation was successful, your mail has been confirmed.";
       }
+
       notification(res, { status, message });
     } catch (err) {
-      console.log("func confirmEmail", err);
-      if (err.name === "TokenExpiredError") {
-        notification(res, { status: false, message: "Link expired" });
-      } else {
+      const isTokenExpiredError = err instanceof Error && err.name === "TokenExpiredError";
+
+      if (!isTokenExpiredError) {
         notification(res, { status: false, message: "Something went wrong" });
+
+        return;
       }
+
+      notification(res, { status: false, message: "Link expired" });
     }
   },
 
-  async recoveryPassword(req: IRecoveryPassword, res: Response) {
+  async recoveryPassword(req: TRecoveryPassword, res: Response) {
     let status = false;
     let message = "";
     let description = "";
+
     try {
-      const user = (await jwtVerify(req.params.token, recoveryPasswordTokenSecret)) as unknown as {
+      const user = (await jwtVerify(req.params.token, ENV.RECOVERY_PASSWORD_TOKEN_SECRET)) as unknown as {
         password: string;
         id: string;
       };
+
       const encryptedPassword = await bcryptVerify(user.password);
       const result = await User.update({ password: encryptedPassword }, { where: { id: user.id } });
       if (result) {
@@ -147,7 +159,7 @@ export const userRepository = {
         if (user.confirm === false) {
           throw new Error("Please confirm your email address before proceeding");
         } else {
-          const recoveryPasswordToken = getTokenRecoveryPassword({
+          const recoveryPasswordToken = jwtToken.generateRecoveryPasswordToken({
             id: user.id,
             password: req.body.password,
           });
@@ -173,25 +185,21 @@ export const userRepository = {
         where: { email },
         attributes: ["id", "email", "password"],
         raw: true,
-      });
+      }).then((res) => getOrThrow(res));
 
-      const verification: boolean = await bcrypt.compare(password, user?.password);
-      console.log("verification", verification);
+      const verification: boolean = await bcrypt.compare(password, user.password);
 
-      if (!verification || !user) {
-        res.status(401).json({
-          message: "Incorrect username or password",
-        });
+      if (!verification) {
+        res.status(401).json({ message: "Incorrect username or password" });
       } else {
-        const tokens = getTokensAuth({ id: user.id });
-        console.log("user.signIn tokens:", tokens);
+        const tokens = jwtToken.generatePairTokens({ id: user.id });
+
         res.status(200).json({
           message: "You are successfully logged in",
           ...tokens,
         });
       }
     } catch (err) {
-      console.log("func signIn", err);
       res.status(500).json({ message: `${err}` });
     }
   },
@@ -202,23 +210,28 @@ export const userRepository = {
         where: { id: req.user.id },
         attributes: ["password"],
         raw: true,
-      });
+      }).then((res) => getOrThrow(res));
 
       const verification: boolean = await bcrypt.compare(req.body.oldPassword, user?.password);
+
       if (verification) {
         const encryptedPassword: string = await bcryptVerify(req.body.newPassword);
+
         await User.update({ password: encryptedPassword }, { where: { id: req.user.id } });
+
         res.status(200).json({
           message: "Password changed successfully",
         });
       } else {
-        res.status(400).json({
-          message: "Wrong password",
-        });
+        res.status(400).json({ message: "Wrong password" });
       }
     } catch (e) {
       res.status(500).json({});
+
       console.log("func changePassword", e);
     }
   },
 };
+
+export { userRepository };
+export type { IAuthReq };

@@ -87,15 +87,15 @@ const baseTypescriptRules = {
       },
     },
   ],
-  "@typescript-eslint/consistent-type-imports": [
-    "error",
-    {
-      prefer: "type-imports",
-      disallowTypeAnnotations: true,
-      fixStyle: "inline-type-imports",
-    },
-  ],
-  "@typescript-eslint/consistent-type-exports": ["error", { fixMixedExportsWithInlineTypeSpecifier: true }],
+  // "@typescript-eslint/consistent-type-imports": [
+  //   "error",
+  //   {
+  //     prefer: "type-imports",
+  //     disallowTypeAnnotations: true,
+  //     fixStyle: "inline-type-imports",
+  //   },
+  // ],
+  "@typescript-eslint/consistent-type-exports": ["error", {fixMixedExportsWithInlineTypeSpecifier: true}],
   "@typescript-eslint/restrict-template-expressions": [
     "error",
     {
@@ -106,16 +106,16 @@ const baseTypescriptRules = {
       allowRegExp: false,
     },
   ],
-  "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }],
-  "@typescript-eslint/array-type": ["error", { default: "array" }],
+  "@typescript-eslint/unbound-method": ["error", {ignoreStatic: true}],
+  "@typescript-eslint/array-type": ["error", {default: "array"}],
 
   // custom rules from "rulesdir"
   "rulesdir/enum-naming-convention": "error",
   "rulesdir/type-naming-convention": "error",
   "rulesdir/interface-naming-convention": "error",
   "rulesdir/do-not-use-enum-keys": "error",
-  "rulesdir/component-params-type": "error",
+  // "rulesdir/component-params-type": "error",
   // "rulesdir/no-unnecessary-condition": "warn",
 };
 
-export { baseTypescriptRules };
+export {baseTypescriptRules};

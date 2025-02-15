@@ -1,18 +1,18 @@
-import { Response } from "express";
+import { type Response } from "express";
 import { Board } from "../../db/models/boards";
 import { List } from "../../db/models/lists";
-import { AuthReq } from "./auth";
+import { type IAuthReq } from "./auth";
 
-interface IGetList extends AuthReq {
-  query: { boardId: string };
+interface IGetList extends IAuthReq {
+  query: { boardId: string; };
 }
 
-interface ICreateLists extends AuthReq {
-  body: { lists: { name: string; boarsId: string; id: string }[] };
+interface ICreateLists extends IAuthReq {
+  body: { lists: { name: string; boarsId: string; id: string; }[]; };
 }
 
-interface IDeleteList extends AuthReq {
-  body: { id: string };
+interface IDeleteList extends IAuthReq {
+  body: { id: string; };
 }
 
 export const listRepository = {

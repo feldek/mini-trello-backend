@@ -1,13 +1,13 @@
-import { Response } from "express";
+import { type Response } from "express";
 
-export const notification = async (
+export const notification = (
   res: Response,
   {
     status = false,
     message = "",
     description = "",
-  }: { status: boolean; message: string; description?: string },
-): Promise<void> => {
+  }: { status: boolean; message: string; description?: string; },
+): void => {
   try {
     let header: string;
     let colorHeader: string;

@@ -21,7 +21,7 @@ app.use(express.static(__dirname));
 app.use("/", routes);
 
 connectDB()
-  .then(async () => {
+  .then(() => {
     app.listen(
       PORT,
       function () {

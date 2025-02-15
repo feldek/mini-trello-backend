@@ -1,5 +1,5 @@
 import { User } from "../../db/models/users";
-import { fileRepository, IUploadFile } from "../repositories/fileRepository";
+import { fileRepository, type IUploadFile } from "../repositories/fileRepository";
 
 interface IUploadUserAvatar extends IUploadFile {
   userId: string;
@@ -13,7 +13,7 @@ export const fileService = {
       fileRepository.removeFileInFolderByFileName({ folder, fileName: existFiles });
     }
     await User.update({ avatar: link }, { where: { id: userId } });
+
     return { link };
   },
 };
- 

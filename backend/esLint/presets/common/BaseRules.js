@@ -9,7 +9,7 @@ const baseCommonRules = {
   // warn
   "no-constant-condition": "warn",
   "no-console": "warn",
-  "no-param-reassign": ["warn", { props: false }],
+  "no-param-reassign": ["warn", {props: false}],
   "rulesdir/no-disabled-checks": "warn",
   // "jest/no-conditional-expect": "warn",
   "rulesdir/no-invalid-selectors": "warn",
@@ -30,10 +30,10 @@ const baseCommonRules = {
   "array-bracket-spacing": ["error", "never"],
   "array-element-newline": ["error", "consistent"],
   "no-trailing-spaces": "error",
-  "comma-spacing": ["error", { before: false, after: true }],
+  "comma-spacing": ["error", {before: false, after: true}],
   "func-call-spacing": "error",
   "function-call-argument-newline": ["error", "consistent"],
-  "key-spacing": ["error", { mode: "strict" }],
+  "key-spacing": ["error", {mode: "strict"}],
   "operator-linebreak": "error",
   "newline-before-return": "error",
   "no-mixed-operators": "error",
@@ -65,7 +65,7 @@ const baseCommonRules = {
   ],
   "consistent-return": "error",
   // "import/no-duplicates": "error",
-  "no-multiple-empty-lines": ["error", { max: 1 }],
+  "no-multiple-empty-lines": ["error", {max: 1}],
   "comma-dangle": ["error", "always-multiline"],
   semi: ["error", "always"],
   "arrow-parens": ["error", "always"],
@@ -80,11 +80,11 @@ const baseCommonRules = {
   ],
   "object-curly-spacing": ["error", "always"],
   "eol-last": ["error", "always"],
-  indent: ["error", 2, { SwitchCase: 1 }],
+  indent: ["error", 2, {SwitchCase: 1}],
   "no-nested-ternary": "error",
-  "no-unneeded-ternary": ["error", { defaultAssignment: false }],
-  "no-empty": ["error", { allowEmptyCatch: true }],
-  "newline-per-chained-call": ["error", { ignoreChainWithDepth: 3 }],
+  "no-unneeded-ternary": ["error", {defaultAssignment: false}],
+  "no-empty": ["error", {allowEmptyCatch: true}],
+  "newline-per-chained-call": ["error", {ignoreChainWithDepth: 3}],
   "no-empty-function": [
     "error",
     {
@@ -93,4 +93,4 @@ const baseCommonRules = {
   ],
 };
 
-export { baseCommonRules };
+export {baseCommonRules};

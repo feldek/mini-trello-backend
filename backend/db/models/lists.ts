@@ -3,7 +3,7 @@ import { IModelStatic, sequelize } from ".";
 import { Board } from "./boards";
 import { Task } from "./tasks";
 
-export interface IList extends Model {
+interface IList extends Model {
   boardId: string;
   name: string;
   id: string;
@@ -12,30 +12,42 @@ export interface IList extends Model {
   updatedAt: Date;
 }
 
-export const List = <IModelStatic<IList>>sequelize.define("lists", {
-  boardId: {
-    type: DataTypes.UUID,
+const List = <IModelStatic<IList>>sequelize.define(
+  "lists",
+  {
+    boardId: {
+      type: DataTypes.UUID,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
-});
+);
 
 List.associate = () => {
-  List.hasMany(Task, {
-    foreignKey: "listId",
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  });
+  List.hasMany(
+    Task,
+    {
+      foreignKey: "listId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    },
+  );
 
-  List.belongsTo(Board, {
-    foreignKey: "boardId",
-  });
+  List.belongsTo(
+    Board,
+    {
+      foreignKey: "boardId",
+    },
+  );
 };
+
+export { List };
+export type{ IList };

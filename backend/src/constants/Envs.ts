@@ -1,0 +1,19 @@
+import { getOrThrow } from "../utils/GetOrThrow";
+
+const REFRESH_TOKEN_SECRET = getOrThrow(process.env.REFRESH_TOKEN_SECRET);
+const REFRESH_TOKEN_LIFE = getOrThrow(process.env.REFRESH_TOKEN_LIFE);
+const RECOVERY_PASSWORD_TOKEN_SECRET = getOrThrow(process.env.RECOVERY_PASSWORD_TOKEN_SECRET);
+const RECOVERY_PASSWORD_TOKEN_LIFE = getOrThrow(process.env.RECOVERY_PASSWORD_TOKEN_LIFE);
+const TOKEN_SECRET = getOrThrow(process.env.TOKEN_SECRET);
+const TOKEN_LIFE = getOrThrow(process.env.TOKEN_LIFE);
+
+const ENV = {
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_LIFE,
+  RECOVERY_PASSWORD_TOKEN_SECRET,
+  RECOVERY_PASSWORD_TOKEN_LIFE,
+  TOKEN_SECRET,
+  TOKEN_LIFE,
+};
+
+export { ENV };

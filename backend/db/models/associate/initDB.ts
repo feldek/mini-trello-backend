@@ -7,5 +7,6 @@ export const connectDB = (): Promise<void> => {
       db[modelName].associate(db);
     }
   });
+
   return sequelize.authenticate();
 };

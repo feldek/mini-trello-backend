@@ -1,6 +1,6 @@
-import { Model, BuildOptions } from "sequelize";
-import { Sequelize } from "sequelize";
 import postgres from "pg";
+import { BuildOptions, Model, Sequelize } from "sequelize";
+
 const importConfig = require("../config/config");
 
 const env = process.env.NODE_ENV || "development";
@@ -32,5 +32,5 @@ export const sequelize = new Sequelize(...dbConfig, sequelizeOptions);
 
 export type IModelStatic<T> = typeof Model & {
   associate(): void;
-  new (values?: object, options?: BuildOptions): T;
+  new(values?: object, options?: BuildOptions): T;
 };

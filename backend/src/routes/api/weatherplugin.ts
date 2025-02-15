@@ -33,8 +33,8 @@ export const weatherPlugin = async (request, response) => {
 };
 
 interface IWeatherPlugin {
-  coord: { lon: number; lat: number };
-  weather: [{ id: number; main: string; description: string; icon: string }];
+  coord: { lon: number; lat: number; };
+  weather: [{ id: number; main: string; description: string; icon: string; }];
   base: string;
   main: {
     temp: number;
@@ -47,11 +47,11 @@ interface IWeatherPlugin {
     grnd_level: number;
   };
   visibility: number;
-  wind: { speed: number; deg: number; gust: number };
-  rain: { "1h": number };
-  clouds: { all: number };
+  wind: { speed: number; deg: number; gust: number; };
+  rain: { "1h": number; };
+  clouds: { all: number; };
   dt: number;
-  sys: { country: string; sunrise: number; sunset: number };
+  sys: { country: string; sunrise: number; sunset: number; };
   timezone: number;
   id: number;
   name: string;

@@ -1,17 +1,17 @@
-import { Response, Request } from "express";
 import fs from "fs";
 import path, { dirname } from "path";
+import { type Response, type Request } from "express";
 import { ENVconfig, PATH_TO_SRC } from "../constants/ENVconfig";
 
 const sharp = require("sharp");
 
 interface IGetAvatar extends Request {
-  params: { folder: string; fileName: string };
+  params: { folder: string; fileName: string; };
 }
 
 export interface IUploadFile {
   folder: string;
-  file: { buffer: any; originalname: any };
+  file: { buffer: any; originalname: any; };
 }
 
 export const fileRepository = {
@@ -20,14 +20,17 @@ export const fileRepository = {
       const { folder, fileName } = req.params;
       const __dirname = dirname(__filename);
       const filePath = path.join(__dirname, "../files/", folder, fileName);
-      fs.readFile(filePath, function(error, data) {
-        if (error) {
-          res.statusCode = 404;
-          res.end("Resourse not found!");
-        } else {
-          res.end(data);
-        }
-      });
+      fs.readFile(
+        filePath,
+        function (error, data) {
+          if (error) {
+            res.statusCode = 404;
+            res.end("Resourse not found!");
+          } else {
+            res.end(data);
+          }
+        },
+      );
     } catch (err) {
     }
   },
@@ -35,11 +38,14 @@ export const fileRepository = {
   async uploadFile({ folder, file }: IUploadFile) {
     const pathToFile = `${PATH_TO_SRC}/files/${folder}`;
 
-    fs.access(pathToFile, (error) => {
-      if (error) {
-        fs.mkdirSync(pathToFile);
-      }
-    });
+    fs.access(
+      pathToFile,
+      (error) => {
+        if (error) {
+          fs.mkdirSync(pathToFile);
+        }
+      },
+    );
 
     if (!file) {
       throw { message: "Ошибка при загрузке файла" };
@@ -53,19 +59,20 @@ export const fileRepository = {
   },
 
   // remove all files in folder, if filename includes userId
-  removeFilesInFolderByUserId({ userId, folder }: { userId: string; folder: string }) {
+  removeFilesInFolderByUserId({ userId, folder }: { userId: string; folder: string; }) {
     const pathToFolder = `${PATH_TO_SRC}/files/${folder}`;
     const fileNames = this.searchFilesInFolderByUserId({ userId, folder });
     fileNames.forEach((file) => fs.unlinkSync(`${pathToFolder}/${file}`));
   },
-  searchFilesInFolderByUserId({ userId, folder }: { userId: string; folder: string }) {
+  searchFilesInFolderByUserId({ userId, folder }: { userId: string; folder: string; }) {
     const regExpSearchText = new RegExp(`(${userId})`, "gi");
     const pathToFolder = `${PATH_TO_SRC}/files/${folder}`;
     const fileNames = fs.readdirSync(pathToFolder).filter((file) => !!file.match(regExpSearchText));
+
     return fileNames;
   },
 
-  removeFileInFolderByFileName({ fileName, folder }: { fileName: string[]; folder: string }) {
+  removeFileInFolderByFileName({ fileName, folder }: { fileName: string[]; folder: string; }) {
     const pathToFolder = `${PATH_TO_SRC}/files/${folder}`;
     fileName.map((fileName) => fs.unlinkSync(`${pathToFolder}/${fileName}`));
   },

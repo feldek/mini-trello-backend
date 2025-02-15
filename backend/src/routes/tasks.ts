@@ -1,20 +1,20 @@
-import { Response } from "express";
+import { type Response } from "express";
 import { Board } from "../../db/models/boards";
 import { List } from "../../db/models/lists";
 import { Task } from "../../db/models/tasks";
-import { AuthReq } from "./auth";
+import { type IAuthReq } from "./auth";
 
-interface IGetTasks extends AuthReq {
-  query: { boardId: string };
+interface IGetTasks extends IAuthReq {
+  query: { boardId: string; };
 }
 
-interface ICreateTasks extends AuthReq {
+interface ICreateTasks extends IAuthReq {
   body: {
-    tasks: { name: string; id: string; order: number; description: string; listId: string }[];
+    tasks: { name: string; id: string; order: number; description: string; listId: string; }[];
   };
 }
 
-interface IUpdateTask extends AuthReq {
+interface IUpdateTask extends IAuthReq {
   body: {
     id: string;
     order: number;
@@ -23,8 +23,8 @@ interface IUpdateTask extends AuthReq {
   };
 }
 
-interface IDeleteTask extends AuthReq {
-  body: { id: string };
+interface IDeleteTask extends IAuthReq {
+  body: { id: string; };
 }
 
 export const taskRepository = {
