@@ -3,12 +3,12 @@ version: '3.7'
 
 services:
   frontend:
-    image: docker.io/felldek/mini-trello-frontend:latest
-    pull_policy: always
+    build: ./frontend
+    image: "mini_trello_frontend:latest"
 
   proxy:
-    image: docker.io/felldek/mini-trello-proxy:latest
-    pull_policy: always
+    build: ./nginx-proxy
+    image: "mini_trello_proxy:latest"
     ports:
       - "80:80"
 
@@ -17,25 +17,24 @@ services:
     ports:
       - '5433:5432'
     environment:
-      POSTGRES_DB: ${MINI_TRELLO_DB_CONFIG_DATABASE}
-      POSTGRES_USER: ${MINI_TRELLO_DB_CONFIG_USERNAME}
-      POSTGRES_PASSWORD: ${MINI_TRELLO_DB_CONFIG_PASSWORD}
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    image: docker.io/felldek/mini-trello-backend:latest
-    pull_policy: always
+    build: ./backend/
+    image: "mini_trello_backend:latest"
     environment:
       NODE_ENV: "development"
-      DB_CONFIG_HOST: ${MINI_TRELLO_DB_CONFIG_HOST}
-      DB_CONFIG_USERNAME: ${MINI_TRELLO_DB_CONFIG_USERNAME}
-      DB_CONFIG_PASSWORD: ${MINI_TRELLO_DB_CONFIG_PASSWORD}
-      DB_CONFIG_DATABASE: ${MINI_TRELLO_DB_CONFIG_DATABASE}
-      DB_CONFIG_PORT: ${MINI_TRELLO_DB_CONFIG_PORT}
-      HOST: ${MINI_TRELLO_HOST}
-      EMAIL: ${MINI_TRELLO_EMAIL}
-      EMAIL_PASSWORD: ${MINI_TRELLO_EMAIL_PASSWORD}
+      DB_CONFIG_HOST: "postgres_db"
+      DB_CONFIG_USERNAME: "postgres"
+      DB_CONFIG_PASSWORD: "postgres"
+      DB_CONFIG_DATABASE: "mini-trello"
+      DB_CONFIG_PORT: "5432"
+      EMAIL: "felldektest@yandex.by"
+      EMAIL_PASSWORD: "zofosgmaubumnxhc"
       OPEN_WEATHER_MAP_KEY: "09c9100efc9d8293dc475e96d7fbeed7"
       RECOVERY_PASSWORD_TOKEN_LIFE: "1800s"
       RECOVERY_PASSWORD_TOKEN_SECRET: "a23764d8447acfda33c5234f186417acc0591473a7c2a4ed5448b818242ad87622826d91f"

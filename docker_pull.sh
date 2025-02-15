@@ -7,8 +7,9 @@ source ~/passwords/envs.txt
 IMAGE_BACKEND="felldek/mini-trello-backend"
 IMAGE_FRONTEND="felldek/mini-trello-frontend"
 IMAGE_PROXY="felldek/mini-trello-proxy"
+#also we can get version from any package
+#IMAGE_TAG=$( jq -r '.version' backend/package.json; )
 IMAGE_TAG=v1.0.2
-
 
 #~passwords/docker-password.txt  password like line
 #docker login -u "${DOCKER_USERNAME}" --password-stdin < ~/passwords/docker-password.txt

@@ -1,41 +1,41 @@
 import axios from "axios";
-import { config, forcedLogOut } from "../Constants";
+import {config, forcedLogOut} from "../Constants";
 
 const apiUrl = config.apiUrl;
 
-const instance = axios.create({ baseURL: apiUrl });
+const instance = axios.create({baseURL: apiUrl});
 instance.interceptors.response.use(
-  function(response) {
+  function (response) {
     return new Promise<any>((resolve) => {
-      resolve({ payload: response.data, status: true });
+      resolve({payload: response.data, status: true});
     });
   },
-  function(error) {
+  function (error) {
     if (error.message === "Network Error") {
-      return Promise.resolve({ payload: error, status: false });
+      return Promise.resolve({payload: error, status: false});
     }
-    return { payload: error.response.data, status: false };
+    return {payload: error.response.data, status: false};
   },
 );
 
-const instanceAuth = axios.create({ baseURL: apiUrl });
-instanceAuth.interceptors.request.use(function(config) {
+const instanceAuth = axios.create({baseURL: apiUrl});
+instanceAuth.interceptors.request.use(function (config) {
   const token = localStorage.getItem("token") || undefined;
 
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 instanceAuth.interceptors.response.use(
-  function(response) {
+  function (response) {
     console.log(response.data);
     return new Promise<any>((resolve) => {
-      resolve({ payload: response.data, status: true });
+      resolve({payload: response.data, status: true});
     });
   },
-  function(error) {
+  function (error) {
     const originalRequest = error.config;
     if (error.message === "Network Error") {
-      return Promise.resolve({ payload: error, status: false });
+      return Promise.resolve({payload: error, status: false});
     }
     if (error.response.status === 403) {
       return refreshTokensAxios(originalRequest);
@@ -43,13 +43,13 @@ instanceAuth.interceptors.response.use(
     if (error.response.status === 401) {
       return window.location.replace(forcedLogOut);
     }
-    return { payload: error.response.data, status: false };
+    return {payload: error.response.data, status: false};
   },
 );
 
 const api = {
   getRequestAuth<T>(url: string, data?: any): Promise<T> {
-    return instanceAuth.get(url, { params: data });
+    return instanceAuth.get(url, {params: data});
   },
   postRequestAuth<T>(url: string, data: any): Promise<T> {
     return instanceAuth.post(url, data);
@@ -58,7 +58,7 @@ const api = {
     return instanceAuth.patch(url, data);
   },
   deleteRequestAuth<T>(url: string, data: any): Promise<T> {
-    return instanceAuth.delete(url, { data });
+    return instanceAuth.delete(url, {data});
   },
   postRequest<T>(url: string, data?: any, extra?: any): Promise<T> {
     return instance.post(url, data, extra);
@@ -70,7 +70,7 @@ const refreshTokensAxios = async (config: any) => {
   const tokens = await axios.post(
     apiUrl + "auth/refreshTokensAuth",
     {},
-    { headers: { Authorization: `Bearer ${refreshToken}` } },
+    {headers: {Authorization: `Bearer ${refreshToken}`}},
   );
   if (tokens.status === 401) {
     return window.location.replace(forcedLogOut);
@@ -80,4 +80,4 @@ const refreshTokensAxios = async (config: any) => {
   return instanceAuth(config);
 };
 
-export { api };
+export {api};
