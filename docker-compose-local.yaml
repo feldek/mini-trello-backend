@@ -17,7 +17,7 @@ services:
     ports:
       - '5433:5432'
     environment:
-      POSTGRES_DB: "mini-trello"
+      POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
     volumes:
